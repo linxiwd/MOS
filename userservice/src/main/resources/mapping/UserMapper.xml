@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.linxiwd.user.dao.mapper.UserMapper">
+    <resultMap id="BaseResultMap" type="com.linxiwd.user.dao.model.User">
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="userName" property="userName" jdbcType="VARCHAR" />
+        <result column="email" property="email" jdbcType="VARCHAR" />
+        <result column="telNum" property="telNum" jdbcType="VARCHAR" />
+        <result column="passWord" property="passWord" jdbcType="VARCHAR" />
+        <result column="rightLevel" property="rightLevel" jdbcType="TINYINT" />
+        <result column="insertTime" property="insertTime" jdbcType="TIMESTAMP" />
+        <result column="updateTime" property="updateTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, userName, email, telNum, passWord, rightLevel, insertTime, updateTime
+    </sql>
+    <select id="selectUser" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List" />
+        from t_user
+        where email = #{userName,jdbcType=VARCHAR} or telNum = #{userName,jdbcType=VARCHAR} or userName = #{userName,jdbcType=VARCHAR}
+    </select>
+    
+    <select id="selectByEmail" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List" />
+        from t_user
+        where email = #{email,jdbcType=VARCHAR}
+    </select>
+    
+    <select id="selectByTelNum" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List" />
+        from t_user
+        where telNum = #{telNum,jdbcType=VARCHAR}
+    </select>
+    <insert id="addUser" parameterType="com.linxiwd.user.dao.model.User">
+        replace into t_user(userName, email, telNum, passWord,
+        rightLevel)
+        values(#{userName}, #{email}, #{telNum}, #{passWord},
+        #{rightLevel})
+    </insert>
+    <delete id="deleteUser" parameterType="java.lang.String">
+        delete from t_user
+        where userName = #{userName,jdbcType=VARCHAR}
+    </delete>    
+    
+</mapper>

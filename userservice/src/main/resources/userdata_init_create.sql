@@ -1,0 +1,28 @@
+DROP DATABASE userdata;
+CREATE DATABASE userdata;
+USE userdata;
+DROP TABLE IF EXISTS t_user;
+CREATE TABLE t_user (
+id INT NOT NULL AUTO_INCREMENT COMMENT '自增id',
+userName VARCHAR(255) COMMENT '登录用户名',
+email VARCHAR(255) COMMENT '邮箱',
+telNum VARCHAR(255) COMMENT '电话号码',
+passWord VARCHAR(255) NOT NULL COMMENT '登录密码',
+rightLevel TINYINT COMMENT '权限级别',
+insertTime TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '注册时间',
+updateTime TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
+PRIMARY KEY ( id ),
+UNIQUE KEY `userName` (`userName`),
+UNIQUE KEY `email` (`email`),
+UNIQUE KEY `telNum` (`telNum`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户表';
+
+DROP TABLE IF EXISTS t_right;
+CREATE TABLE t_right (
+id INT NOT NULL AUTO_INCREMENT COMMENT '自增id',
+rightLevel TINYINT NOT NULL COMMENT '权限级别',
+rightName VARCHAR(255) NOT NULL COMMENT '权限名称',
+description VARCHAR(255) COMMENT '权限描述',
+PRIMARY KEY ( id ),
+INDEX rightName( rightName )
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='权限表';
